@@ -10,6 +10,8 @@ MCP server for searching Arabic academic research, articles, and dissertations f
 
 خادم MCP للبحث في الأبحاث والمقالات الأكاديمية العربية من مصادر متعددة: المنظومة (أكثر من 4 مليون سجل)، منصة ASJP، شمعة، ومستودعات الوصول الحر الأخرى.
 
+<img width="1199" height="904" alt="Screenshot 2026-05-05 152453" src="https://github.com/user-attachments/assets/027a345c-7e44-43cc-abf1-3225d21de87d" />
+
 ## Table of Contents
 
 - [Arabic Scholar MCP Server](#arabic-scholar-mcp-server)
