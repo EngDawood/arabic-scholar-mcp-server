@@ -1,0 +1,9 @@
+{
+  "name": "arabic-scholar",
+  "displayName": "Arabic Scholar",
+  "version": "0.1.0",
+  "description": "Search, read and cite Arabic and international academic papers. Adds the Arabic Scholar connector and skills for literature search, reading a paper, citations and the previous-studies chapter of a thesis.",
+  "author": { "name": "Arabic Scholar" },
+  "license": "MIT",
+  "keywords": ["research", "academic", "papers", "arabic", "citations", "literature-review"]
+}

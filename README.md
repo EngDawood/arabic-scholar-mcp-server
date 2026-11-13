@@ -1,256 +1,123 @@
-# Arabic Scholar MCP Server
+# الباحث العربي · Arabic Scholar
 
-[![MCP](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
-[![Arabic](https://img.shields.io/badge/Language-Arabic-green)](https://search.mandumah.com)
-[![Firecrawl](https://img.shields.io/badge/Powered%20by-Firecrawl-orange)](https://firecrawl.dev)
+إضافة لـ Claude تبحث في الأوراق العلمية العربية والدولية وتقرؤها وتوثّقها. صُنعت لطلاب الدراسات العليا والباحثين الذين يعملون على الإنتاج العلمي العربي ويحتاجون الأدبيات الدولية إلى جانبه.
 
-**By [Eng. Dawood Saleh](https://x.com/dawo5d)**
+A Claude plugin that finds, reads and cites academic papers in Arabic and English. It is made for graduate students and researchers who work with Arabic scholarship and need the international literature beside it.
 
-MCP server for searching Arabic academic research, articles, and dissertations from multiple sources including Mandumah (4M+ records), ASJP, SHAMAA, and other open-access repositories.
-
-خادم MCP للبحث في الأبحاث والمقالات الأكاديمية العربية من مصادر متعددة: المنظومة (أكثر من 4 مليون سجل)، منصة ASJP، شمعة، ومستودعات الوصول الحر الأخرى.
-
-<img width="1199" height="904" alt="Screenshot 2026-05-05 152453" src="https://github.com/user-attachments/assets/027a345c-7e44-43cc-abf1-3225d21de87d" />
-
-## Table of Contents
-
-- [Arabic Scholar MCP Server](#arabic-scholar-mcp-server)
-  - [Table of Contents](#table-of-contents)
-  - [Quick Start](#quick-start)
-  - [Installation](#installation)
-    - [Claude.ai (Web)](#claudeai-web)
-    - [Claude Desktop](#claude-desktop)
-    - [Claude Code CLI](#claude-code-cli)
-    - [Other MCP Clients](#other-mcp-clients)
-  - [Tools](#tools)
-  - [Examples](#examples)
-    - [بحث بسيط](#بحث-بسيط)
-    - [بحث مع فلاتر](#بحث-مع-فلاتر)
-    - [تفاصيل بحث معين](#تفاصيل-بحث-معين)
-    - [اقتباس أكاديمي](#اقتباس-أكاديمي)
-    - [مراجعة أدبية](#مراجعة-أدبية)
-    - [البحث عن PDF مجاني 🆕](#البحث-عن-pdf-مجاني-)
-  - [Search Parameters](#search-parameters)
-    - [Content Types](#content-types)
-  - [Limitations](#limitations)
-  - [FAQ](#faq)
-  - [Troubleshooting](#troubleshooting)
-  - [Links](#links)
-
-## Quick Start
-
-**متطلبات:** حساب Claude Pro/Max/Team + مفتاح Firecrawl مجاني
-
-1. احصل على مفتاح Firecrawl من [firecrawl.dev/app/api-keys](https://www.firecrawl.dev/app/api-keys)
-
-2. في Claude.ai: **Settings** → **Connectors** → **Add custom connector**
-
-3. أضف الرابط (استبدل `YOUR-KEY`):
-   ```
-   https://arabic-scholar-mcp.engdawood.workers.dev/mcp?api_key=fc-YOUR-KEY
-   ```
-
-4. **(اختياري)** لتفعيل البحث عن PDF مجاني، أضف مفتاح Exa من [exa.ai](https://exa.ai):
-   ```
-   https://arabic-scholar-mcp.engdawood.workers.dev/mcp?api_key=fc-YOUR-KEY&exa_api_key=YOUR-EXA-KEY
-   ```
-
-جاهز! جرب: *"ابحث في المنظومة عن الذكاء الاصطناعي في التعليم"*
+[English](#english) · [العربية](#العربية)
 
 ---
 
-## Installation
+## العربية
 
-### Claude.ai (Web)
+### ما الذي تضيفه
 
-الطريقة الموضحة في Quick Start أعلاه.
+- **موصّل الباحث العربي**: خادم MCP بعيد، كل أدواته للقراءة فقط. يبحث في المستودعات العربية (دار المنظومة، ASJP، شمعة، المكتبة الرقمية السعودية، بنك المعرفة المصري، ومجلات جامعية عربية) وفي 18 مصدراً دولياً مفتوحاً (arXiv وPubMed وCrossref وDOAJ وغيرها)، ويعثر على ملفات PDF مفتوحة الوصول، ويقرأ النص الكامل، ويوثّق المراجع.
+- **أربع مهارات** تعلّم Claude استخدام هذه الأدوات كما يستخدمها باحث:
 
-### Claude Desktop
-
-أضف في ملف `claude_desktop_config.json`:
-
-**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
-**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "arabic-scholar": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://arabic-scholar-mcp.engdawood.workers.dev/mcp?api_key=fc-YOUR-KEY&exa_api_key=YOUR-EXA-KEY"
-      ]
-    }
-  }
-}
-```
-
-### Claude Code CLI
-
-أضف في ملف `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "arabic-scholar": {
-      "type": "http",
-      "url": "https://arabic-scholar-mcp.engdawood.workers.dev/mcp",
-      "env": {
-        "Firecrawl-API-Key": "fc-YOUR-KEY",
-        "Exa-API-Key": "YOUR-EXA-KEY"
-      }
-    }
-  }
-}
-```
-
-### Other MCP Clients
-
-```
-https://arabic-scholar-mcp.engdawood.workers.dev/mcp?api_key=fc-YOUR-KEY&exa_api_key=YOUR-EXA-KEY
-```
-
----
-
-## Tools
-
-| Tool | الوصف |
-|------|-------|
-| `mandumah_search` | البحث في الأبحاث الأكاديمية العربية مع فلاتر متعددة |
-| `mandumah_get_record` | عرض تفاصيل سجل معين (ملخص، مؤلفين، كلمات مفتاحية) |
-| `mandumah_get_citation` | الحصول على اقتباس أكاديمي بصيغة APA أو MLA |
-| `mandumah_list_filters` | عرض خيارات الفلاتر المتاحة (نوع المحتوى، اللغة، إلخ) |
-| `find_paper_pdf` | 🆕 البحث عن نسخ PDF مجانية في ASJP، SHAMAA، ResearchGate، Google Scholar وغيرها |
-
----
-
-## Examples
-
-> **ملاحظة:** اذكر "Arabic Scholar" أو "mandumah" في طلبك لضمان استخدام الأداة.
-
-### بحث بسيط
-
-```
-ابحث في Arabic Scholar عن التعليم الإلكتروني
-```
-
-### بحث مع فلاتر
-
-```
-ابحث عن رسائل دكتوراه عربية في الذكاء الاصطناعي من 2020 إلى 2024
-```
-
-### تفاصيل بحث معين
-
-```
-أعطني تفاصيل السجل رقم 1048275
-```
-
-### اقتباس أكاديمي
-
-```
-اجلب لي اقتباس APA للبحث رقم 1048275
-```
-
-### مراجعة أدبية
-
-```
-ابحث عن أحدث 10 أبحاث محكّمة عن التعلم العميق بالعربية، ثم لخص لي توجهاتها
-```
-
-### البحث عن PDF مجاني 🆕
-
-```
-ابحث عن PDF مجاني لبحث "تطبيقات الذكاء الاصطناعي في المكتبات"
-```
-
-> يبحث في مستودعات متعددة: ASJP، SHAMAA، Al Manhal، ResearchGate، Academia.edu، Google Scholar
-
----
-
-## Search Parameters
-
-| Parameter | الوصف | مثال |
-|-----------|-------|------|
-| `query` | كلمات البحث | `"الذكاء الاصطناعي"` |
-| `content_types` | نوع المحتوى | `["articles", "dissertations"]` |
-| `languages` | اللغة | `["Arabic", "English"]` |
-| `date_from` / `date_to` | نطاق السنوات | `"2020"` / `"2024"` |
-| `peer_reviewed` | محكّم فقط | `true` |
-| `sort` | الترتيب | `"year_desc"` |
-
-### Content Types
-
-| English | العربية |
-|---------|---------|
-| articles | بحوث ومقالات |
-| dissertations | رسائل جامعية |
-| conference_papers | بحوث المؤتمرات |
-| book_reviews | عروض كتب |
-
----
-
-## Limitations
-
-الأداة توفر معلومات ببليوغرافية شاملة (metadata) للأبحاث الأكاديمية:
-
-| متاح ✅ | غير متاح ❌ |
-|------|----------|
-| العنوان (عربي/إنجليزي) | النص الكامل للأبحاث |
-| أسماء المؤلفين | ملفات PDF (إلا عبر أداة find_paper_pdf) |
-| الملخص/المستخلص | |
-| الكلمات المفتاحية | |
-| معلومات النشر (مجلة، سنة، مجلد، عدد) | |
-| البحوث المشابهة | |
-
-**للوصول للنص الكامل:**
-- استخدم أداة `find_paper_pdf` للبحث عن نسخ مجانية
-- أو احصل على اشتراك في [منصة المنظومة](https://mandumah.com) للوصول الكامل
-
----
-
-## FAQ
-
-**كيف أحصل على مفتاح Firecrawl؟**
-> سجّل مجاناً في [firecrawl.dev/app/api-keys](https://www.firecrawl.dev/app/api-keys) - تحصل على 500 طلب شهرياً.
-
-**ما هو مفتاح Exa ولماذا أحتاجه؟**
-> مفتاح Exa مطلوب فقط لأداة `find_paper_pdf` للبحث عن PDF مجاني. احصل عليه من [exa.ai](https://exa.ai). باقي الأدوات تعمل بدونه.
-
-**هل أحتاج اشتراك لاستخدام الأداة؟**
-> لا، الأداة توفر معلومات ببليوغرافية شاملة مجاناً. للنص الكامل، استخدم أداة `find_paper_pdf` أو احصل على اشتراك.
-
-**لماذا لازم أذكر اسم الأداة؟**
-> Claude يحتاج يعرف أي أداة يستخدم. اذكر "Arabic Scholar" أو "mandumah" في طلبك.
-
-**كم عدد النتائج في كل بحث؟**
-> 20 نتيجة لكل صفحة. استخدم `page` للتنقل بين الصفحات.
-
-**هل يدعم البحث بالإنجليزية؟**
-> نعم، يدعم العربية والإنجليزية وعدة لغات أخرى.
-
----
-
-## Troubleshooting
-
-| المشكلة | الحل |
-|---------|------|
-| "Invalid API Key" | تأكد أن المفتاح يبدأ بـ `fc-` بدون مسافات |
-| نتائج فارغة | جرب كلمات بحث أقصر أو فلاتر أقل |
-| الأدوات لا تظهر (Desktop) | أعد تشغيل التطبيق وتأكد من صيغة JSON |
-
----
-
-## Links
-
-| | |
+| المهارة | متى تُستخدم |
 |---|---|
-| المنظومة | [search.mandumah.com](https://search.mandumah.com) |
-| مفتاح Firecrawl | [firecrawl.dev/app/api-keys](https://www.firecrawl.dev/app/api-keys) |
-| مفتاح Exa (اختياري) | [exa.ai](https://exa.ai) |
-| حالة الخادم | [Health Check](https://arabic-scholar-mcp.engdawood.workers.dev/health) |
+| `find-papers` | للبحث عن دراسات في موضوع، بالعربية أو الإنجليزية أو بهما معاً |
+| `read-paper` | للحصول على النص الكامل لورقة واحدة وتلخيصها |
+| `cite-sources` | لتوثيق المراجع بصيغ APA وMLA وChicago وHarvard وBibTeX، أو للتحقق من أن المرجع حقيقي |
+| `previous-studies` | لكتابة مسودة «الدراسات السابقة» في رسالة أو خطة بحث من دراسات حقيقية |
+
+### أمثلة
+
+- ابحث عن دراسات عربية عن أثر التعلم الإلكتروني في التحصيل الدراسي بعد 2020 ورتّبها حسب السنة.
+- اعثر على أحدث الأوراق مفتوحة الوصول في معالجة اللغة العربية، ثم اقرأ أفضل واحدة ولخّص منهجها.
+- وثّق هذا البحث بصيغة APA 7: 10.1038/s41586-021-03819-2
+- اكتب لي الدراسات السابقة لبحث عن القيادة التحويلية في المدارس السعودية من عشر دراسات حقيقية.
+
+### ما تلتزم به المهارات
+
+- لا تذكر دراسة من الذاكرة. كل دراسة في الإجابة أعادتها إحدى الأدوات في المحادثة نفسها.
+- لا تخترع رقم DOI ولا صفحات ولا مجلداً. ما لا يذكره السجل يُترك.
+- حين لا توجد نسخة مفتوحة من البحث تقول ذلك وتعطي رابط الناشر، ولا تبحث عنه في مواقع تنشر النسخ بلا إذن.
+- ما تكتبه مسودة تراجعها أنت. تحقق من كل دراسة في مصدرها قبل التسليم.
+
+### التثبيت
+
+الإضافة في طريقها إلى دليل Claude. حتى تُدرج، حمّلها من هذا المستودع في Claude Code:
+
+```bash
+git clone https://github.com/EngDawood/arabic-scholar-mcp-server
+```
+
+```bash
+claude --plugin-dir ./arabic-scholar-mcp-server
+```
+
+**الحالة: نسخة أولية.** عنوان الموصّل العام قيد الإعداد، وسيُحدَّث في ملف `.mcp.json` قبل الإدراج في الدليل. المهارات تعمل الآن مع أي موصّل يقدّم الأدوات نفسها.
+
+### ما الذي تشغّله وترسله
+
+الإضافة لا تشغّل أي برنامج على جهازك. لا hooks فيها ولا سكربتات، ومهاراتها تعليمات مكتوبة بصيغة Markdown.
+
+الموصّل خادم بعيد. حين يطلب Claude إحدى أدواته تُرسل مدخلات الأداة فقط (مثل نص البحث أو رقم DOI أو رابط PDF) إلى خادم الباحث العربي، فيستعلم من المصادر الأكاديمية ويعيد النتائج. لا يُرسل شيء آخر من محادثتك أو ملفاتك.
+
+لا تحتاج حساباً ولا مفتاحاً للبدء. للاستخدام المجاني حد يومي وحد في الدقيقة.
+
+### الخصوصية والدعم
+
+سياسة الخصوصية وشروط الاستخدام والدليل وجهة الدعم منشورة في موقع الباحث العربي بالعربية والإنجليزية (`/privacy` و`/terms` و`/docs` و`/support`). لطلب مصدر جديد أو للإبلاغ عن مشكلة في الإضافة افتح issue في هذا المستودع.
 
 ---
 
-**المطور:** [Eng. Dawood Saleh](https://x.com/dawo5d)
+## English
+
+### What the plugin adds
+
+- **The Arabic Scholar connector.** A remote MCP server whose tools are all read-only. It searches Arabic repositories (Dar Almandumah, ASJP, SHAMAA, the Saudi Digital Library, the Egyptian Knowledge Bank, Arab university journals) and 18 open international sources (arXiv, PubMed, Crossref, DOAJ and others), finds open-access PDFs, reads full text and formats citations.
+- **Four skills** that teach Claude to use those tools the way a researcher would:
+
+| Skill | Use it when you want to |
+|---|---|
+| `find-papers` | Find papers on a topic in Arabic, English or both |
+| `read-paper` | Get the full text of one paper and a summary of it |
+| `cite-sources` | Format references in APA, MLA, Chicago, Harvard or BibTeX, or check that a reference is real |
+| `previous-studies` | Draft the previous-studies (الدراسات السابقة) section of a thesis or proposal from real papers |
+
+### Example prompts
+
+- Find Arabic studies on the effect of e-learning on academic achievement since 2020, sorted by year.
+- Find recent open-access papers on Arabic NLP, then read the best one and summarise its method.
+- Cite this paper in APA 7: 10.1038/s41586-021-03819-2
+- Write the previous-studies section for a study on transformational leadership in Saudi schools, from ten real studies.
+
+### What the skills hold to
+
+- No paper from memory. Every paper in an answer was returned by a tool in the same conversation.
+- No invented DOI, page range or volume. What the record lacks is left out.
+- When a paper has no open copy, the skill says so and gives the publisher link. It does not look on sites that share copies without permission.
+- The output is a draft for you to revise. Check each study against its source before you submit.
+
+### Install
+
+The plugin is on its way to the Claude directory. Until it is listed, load it from this repository in Claude Code:
+
+```bash
+git clone https://github.com/EngDawood/arabic-scholar-mcp-server
+```
+
+```bash
+claude --plugin-dir ./arabic-scholar-mcp-server
+```
+
+**Status: preview.** The public connector address is being set up and will be updated in `.mcp.json` before the directory listing. The skills work now with any connector that offers the same tools.
+
+### What it runs and sends
+
+The plugin runs no code on your computer. It has no hooks and no scripts. Its skills are Markdown instructions.
+
+The connector is a remote server. When Claude calls one of its tools, only the tool's inputs (for example your search text, a DOI or a PDF link) are sent to the Arabic Scholar server, which queries the academic sources and returns the results. Nothing else from your conversation or your files is sent.
+
+You need no account or key to start. Free use has a daily limit and a per-minute limit.
+
+### Privacy and support
+
+The privacy policy, terms of use, documentation and support contact are on the Arabic Scholar website, in Arabic and in English (`/privacy`, `/terms`, `/docs` and `/support`). To ask for a new source or report a problem with the plugin, open an issue in this repository.
+
+## License
+
+MIT. See `LICENSE`.

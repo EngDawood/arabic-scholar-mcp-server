@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "arabic-scholar": {
+      "type": "http",
+      "url": "https://arabic-scholar.example/mcp"
+    }
+  }
+}
